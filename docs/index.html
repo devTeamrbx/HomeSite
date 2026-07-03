@@ -1,1 +1,163 @@
-# 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        :root {
+            --robux-gold: #FFD700;
+            --roblox-blue: #00A2FF;
+            --bg-color: #1A1B23;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: var(--robux-gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        #button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 320px;
+        }
+
+        .roblox-btn {
+            background-color: var(--roblox-blue);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 5px #0077AA;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+        }
+
+        .roblox-btn img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .roblox-btn span {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .roblox-btn:hover {
+            background-color: #00B4FF;
+        }
+
+        .roblox-btn:active {
+            box-shadow: 0 0px #0077AA;
+            transform: translateY(5px);
+        }
+        
+        .error-msg {
+            color: #FF4444;
+            font-weight: bold;
+        }
+      .copyright-box {
+  text-align: center; /* Der Text steht in der Mitte */
+  padding: 20px; /* Abstand oben und unten */
+  background-color: #f1f1f1; /* Ein heller Hintergrund */
+  color: #666; /* Eine graue Schriftfarbe */
+  font-size: 14px; /* Kleine Schrift */
+}
+
+      
+    </style>
+</head>
+<body>
+
+    <h1>ROBLOX MENÜ</h1>
+    <div id="button-container"></div>
+  
+<footer class="copyright-box">
+  <p>&copy; 2026 Starcode. All rights reserved.</p>
+</footer>
+
+
+
+    <script>
+        const container = document.getElementById('button-container');
+
+        async function loadButtons() {
+            try {
+                const response = await fetch('./Data.json');
+                
+                if (!response.ok) {
+                    throw new Error('Fehler beim Laden der JSON-Datei');
+                }
+                
+                const buttonData = await response.json();
+
+                buttonData.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'roblox-btn';
+
+                    // Prüft, ob ein Bild vorhanden und nicht leer ist
+                    if (item.image && item.image.trim() !== "") {
+                        const img = document.createElement('img');
+                        img.src = item.image;
+                        img.alt = item.text;
+                        btn.appendChild(img);
+                    }
+
+                    const textSpan = document.createElement('span');
+                    textSpan.innerText = item.text;
+                    btn.appendChild(textSpan);
+
+                    btn.addEventListener('click', () => {
+                        if ('speechSynthesis' in window) {
+                            const utterance = new SpeechSynthesisUtterance(item.voice);
+                            utterance.lang = 'de-DE'; 
+                            utterance.rate = 1.0;     
+                            utterance.pitch = 0.8;    
+                            window.speechSynthesis.speak(utterance);
+                        }
+
+                        setTimeout(() => {
+                            window.location.href = item.url;
+                        }, 1000); 
+                    });
+
+                    container.appendChild(btn);
+                });
+
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `<p class="error-msg">Fehler beim Laden. Starte das Projekt über einen lokalen Server (CORS).</p>`;
+            }
+        }
+
+        loadButtons();
+    </script>
+</body>
+</html>
+
