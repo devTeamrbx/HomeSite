@@ -1,0 +1,232 @@
+:root {
+    --robux-gold: #FFD700;
+    --roblox-blue: #00A2FF;
+    --bg-color: #1A1B23;
+    --text-color: #FFFFFF;
+    --footer-bg: #12131a;
+    --footer-border: #2a2b36;
+    --sidebar-bg: #252631;
+}
+
+/* Light Mode Variablen */
+[data-theme="light"] {
+    --bg-color: #F0F2F5;
+    --text-color: #1A1B23;
+    --footer-bg: #E4E6EB;
+    --footer-border: #CCD0D5;
+    --sidebar-bg: #FFFFFF;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Drei-Striche-Button (Oben Rechts) */
+.menu-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Animation für das X beim Öffnen */
+.menu-toggle.open span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.open span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Seitenmenü (Sidebar) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 250px;
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 80px 15px 20px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-sizing: border-box;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+/* Switch Styling (Kippschalter) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--roblox-blue);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* Hauptinhalt */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+h1 {
+    color: var(--robux-gold);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 320px;
+}
+
+.roblox-btn {
+    background-color: var(--roblox-blue);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 5px #0077AA;
+    transition: all 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.roblox-btn img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.roblox-btn span {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.roblox-btn:hover {
+    background-color: #00B4FF;
+}
+
+.roblox-btn:active {
+    box-shadow: 0 0px #0077AA;
+    transform: translateY(5px);
+}
+
+.error-msg {
+    color: #FF4444;
+    font-weight: bold;
+}
+
+.copyright-box {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--footer-bg);
+    color: #888888;
+    font-size: 14px;
+    border-top: 1px solid var(--footer-border);
+    transition: background-color 0.3s;
+}
