@@ -18,9 +18,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between; /* ÄNDERUNG: Schiebt den Footer nach unten */
             min-height: 100vh;
             margin: 0;
+        }
+
+        /* NEU: Ein Container für die mittleren Elemente */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            padding: 20px;
         }
 
         h1 {
@@ -28,6 +38,7 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             font-size: 3rem;
             margin-bottom: 2rem;
+            text-align: center;
         }
 
         #button-container {
@@ -82,27 +93,32 @@
             color: #FF4444;
             font-weight: bold;
         }
-      .copyright-box {
-  text-align: center; /* Der Text steht in der Mitte */
-  padding: 20px; /* Abstand oben und unten */
-  background-color: #f1f1f1; /* Ein heller Hintergrund */
-  color: #666; /* Eine graue Schriftfarbe */
-  font-size: 14px; /* Kleine Schrift */
-}
 
+        /* ANGEPASST: Das neue, dunkle Copyright-Design */
+        .copyright-box {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #12131a; /* Etwas dunkler als der Seitenhintergrund */
+            color: #888888; /* Dezentes Grau für die Schrift */
+            font-size: 14px;
+            border-top: 1px solid #2a2b36; /* Feine Trennlinie nach oben */
+        }
       
     </style>
 </head>
 <body>
 
-    <h1>ROBLOX MENÜ</h1>
-    <div id="button-container"></div>
+    <!-- NEU: Umschließt Inhalt, um das Layout sauber zu trennen -->
+    <div class="content-wrapper">
+        <h1>ROBLOX MENÜ</h1>
+        <div id="button-container"></div>
+    </div>
   
-<footer class="copyright-box">
-  <p>&copy; 2026 Starcode. All rights reserved.</p>
-</footer>
-
-
+    <footer class="copyright-box">
+        <p style="margin: 0;">&copy; 2026 Starcode. Alle Rechte vorbehalten.</p>
+    </footer>
 
     <script>
         const container = document.getElementById('button-container');
@@ -160,4 +176,5 @@
     </script>
 </body>
 </html>
+
 
