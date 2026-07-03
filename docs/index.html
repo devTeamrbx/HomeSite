@@ -18,12 +18,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* ÄNDERUNG: Schiebt den Footer nach unten */
+            justify-content: space-between;
             min-height: 100vh;
             margin: 0;
         }
 
-        /* NEU: Ein Container für die mittleren Elemente */
         .content-wrapper {
             display: flex;
             flex-direction: column;
@@ -94,23 +93,20 @@
             font-weight: bold;
         }
 
-        /* ANGEPASST: Das neue, dunkle Copyright-Design */
         .copyright-box {
             text-align: center;
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            background-color: #12131a; /* Etwas dunkler als der Seitenhintergrund */
-            color: #888888; /* Dezentes Grau für die Schrift */
+            background-color: #12131a;
+            color: #888888;
             font-size: 14px;
-            border-top: 1px solid #2a2b36; /* Feine Trennlinie nach oben */
+            border-top: 1px solid #2a2b36;
         }
-      
     </style>
 </head>
 <body>
 
-    <!-- NEU: Umschließt Inhalt, um das Layout sauber zu trennen -->
     <div class="content-wrapper">
         <h1>ROBLOX MENÜ</h1>
         <div id="button-container"></div>
@@ -137,7 +133,6 @@
                     const btn = document.createElement('button');
                     btn.className = 'roblox-btn';
 
-                    // Prüft, ob ein Bild vorhanden und nicht leer ist
                     if (item.image && item.image.trim() !== "") {
                         const img = document.createElement('img');
                         img.src = item.image;
@@ -149,18 +144,35 @@
                     textSpan.innerText = item.text;
                     btn.appendChild(textSpan);
 
+                    // FIX: Klick-Event optimiert
                     btn.addEventListener('click', () => {
-                        if ('speechSynthesis' in window) {
+                        // Funktion für den Seitenwechsel definieren
+                        const navigate = () => {
+                            if (item.url && item.url.trim() !== "") {
+                                window.location.href = item.url;
+                            }
+                        };
+
+                        if ('speechSynthesis' in window && item.voice) {
+                            // Laufende Sprachausgaben abbrechen, um Überlagerung zu verhindern
+                            window.speechSynthesis.cancel();
+
                             const utterance = new SpeechSynthesisUtterance(item.voice);
                             utterance.lang = 'de-DE'; 
                             utterance.rate = 1.0;     
                             utterance.pitch = 0.8;    
-                            window.speechSynthesis.speak(utterance);
-                        }
 
-                        setTimeout(() => {
-                            window.location.href = item.url;
-                        }, 1000); 
+                            // FIX: Erst weiterleiten, wenn die Stimme FERTIG gesprochen hat
+                            utterance.onend = navigate;
+
+                            // Sicherheits-Fallback: Falls die Sprachausgabe hakt, nach max. 3 Sek weiterleiten
+                            setTimeout(navigate, 3000);
+
+                            window.speechSynthesis.speak(utterance);
+                        } else {
+                            // Fallback, falls der Browser keine Sprachausgabe unterstützt oder kein Text da ist
+                            navigate();
+                        }
                     });
 
                     container.appendChild(btn);
@@ -176,5 +188,3 @@
     </script>
 </body>
 </html>
-
-
