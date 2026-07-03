@@ -5,11 +5,9 @@ const themeSwitch = document.getElementById('themeSwitch');
 const voiceSwitch = document.getElementById('voiceSwitch');
 
 // --- SPRACH-ERKENNUNG (DEUTSCH / ENGLISCH) ---
-// Erkennt die Systemsprache des Browsers (z.B. 'de', 'de-DE', 'en', 'en-US')
 const userLang = (navigator.language || navigator.userLanguage).toLowerCase();
 const isGerman = userLang.startsWith('de');
 
-// Übersetzungsobjekt für die statischen Seitentexte
 const translations = {
     de: {
         title: "ROBLOX MENÜ",
@@ -27,7 +25,6 @@ const translations = {
     }
 };
 
-// Texte auf der Seite basierend auf der erkannten Sprache anpassen
 const currentLang = isGerman ? 'de' : 'en';
 document.getElementById('text-title').innerText = translations[currentLang].title;
 document.getElementById('text-lightmode').innerText = translations[currentLang].lightmode;
@@ -75,7 +72,8 @@ voiceSwitch.addEventListener('change', () => {
 // --- BUTTON LADEN LOGIK ---
 async function loadButtons() {
     try {
-        const response = await fetch('./Data.json');
+        // FIX: Da die HTML im docs-Hauptordner liegt, müssen wir 'src/Data.json' abrufen
+        const response = await fetch('src/Data.json');
         
         if (!response.ok) {
             throw new Error('Fehler beim Laden');
@@ -89,6 +87,7 @@ async function loadButtons() {
 
             if (item.image && item.image.trim().length > 0) {
                 const img = document.createElement('img');
+                // Falls deine Bilder auch im src-Ordner liegen, müsste hier eventuell 'src/' + item.image stehen
                 img.src = item.image;
                 img.alt = item.text;
                 btn.appendChild(img);
@@ -110,8 +109,6 @@ async function loadButtons() {
                     window.speechSynthesis.cancel();
 
                     const utterance = new SpeechSynthesisUtterance(item.voice);
-                    
-                    // Passt das Vorlesen an: Deutsch bei deutscher Systemsprache, sonst Englisch
                     utterance.lang = isGerman ? 'de-DE' : 'en-US'; 
                     utterance.rate = 1.0;     
                     utterance.pitch = 0.8;    
