@@ -73,7 +73,7 @@ voiceSwitch.addEventListener('change', () => {
 async function loadButtons() {
     try {
         // FIX: Da die HTML im docs-Hauptordner liegt, müssen wir 'src/Data.json' abrufen
-        const response = await fetch('src/Data.json');
+        const response = await fetch('Data.json');
         
         if (!response.ok) {
             throw new Error('Fehler beim Laden');
