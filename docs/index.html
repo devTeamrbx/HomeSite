@@ -47,37 +47,9 @@
             width: 320px;
         }
 
-        .roblox-btn {
-            background-color: var(--roblox-blue);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 5px #0077AA;
-            transition: all 0.1s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
-        }
+  
 
-        .roblox-btn img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-            border-radius: 6px;
-        }
-
-        .roblox-btn span {
-            flex-grow: 1;
-            text-align: left;
-        }
+      
 
         .roblox-btn:hover {
             background-color: #00B4FF;
@@ -103,6 +75,46 @@
             font-size: 14px;
             border-top: 1px solid #2a2b36;
         }
+        
+        .roblox-btn {
+    background-color: var(--roblox-blue);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 5px #0077AA;
+    transition: all 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    /* FIX: Verhindert das Zusammenquetschen und Überlagern */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    box-sizing: border-box; /* Zählt Padding zur Breite dazu */
+    width: 100%; /* Nutzt die vollen 320px des Containers */
+    overflow: hidden; /* Schneidet nichts hässlich ab */
+}
+
+.roblox-btn img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    flex-shrink: 0; /* FIX: Verhindert, dass das Bild gestaucht wird */
+}
+
+.roblox-btn span {
+    flex-grow: 1;
+    text-align: left;
+    white-space: nowrap; /* FIX: Verhindert ungewollten Zeilenumbruch */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Fügt ... hinzu, falls der Text zu lang wird */
+}
     </style>
 </head>
 <body>
